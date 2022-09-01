@@ -18,9 +18,9 @@ class ChiselWrapper extends RawModule {
   data1 := io.in(4, 2)
   data2 := io.in(7, 5)
 
-  val result_mult = (Cat( 1.U(3.W), 0.U(58.W), data1) * Cat(1.U(3.W), 0.U(58.W), data2))
+  val result_mult = (Cat( 1.U(3.W), 0.U(58.W), data1) + Cat(1.U(3.W), 0.U(58.W), data2))
   when(io.in(1)) {
-    result := result_mult
+    result := (result_mult.xorR + 2.U)
   }.otherwise {
     result := data1 + data2
   }
