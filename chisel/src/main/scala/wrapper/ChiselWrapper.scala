@@ -19,7 +19,7 @@ class ChiselWrapper extends RawModule {
   data2 := io.in(7,5)
 
   when(io.in(1)){
-    result := (data1 >> data2)
+    result := (data1 * data2)
   }.otherwise{
     result := data1 + data2
   }
@@ -27,14 +27,6 @@ class ChiselWrapper extends RawModule {
   display.io.in := result
   display.io.dot := io.in(1)
   io.out := display.io.out
-  // val rst = io.in(1)
-
-  // val gcd = withClockAndReset(clk.asClock, rst)(Module(new GCD))
-  // gcd.io.value1 := io.in(4, 3)
-  // gcd.io.value2 := io.in(6, 5)
-  // gcd.io.loadingValues := io.in(2)
-  // io.out := Cat(gcd.io.outputValid, gcd.io.outputGCD(6, 0))
-
 }
 
 object ChiselWrapper extends App {
