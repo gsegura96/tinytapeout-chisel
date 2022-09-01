@@ -15,15 +15,15 @@ class ChiselWrapper extends RawModule {
   val data2 = Wire(UInt(3.W))
   val result = Wire(UInt(4.W))
 
-  data1 := io.in(4,2)
-  data2 := io.in(7,5)
+  data1 := io.in(4, 2)
+  data2 := io.in(7, 5)
 
-  when(io.in(1)){
-    result := (data1 * data2)
-  }.otherwise{
+  when(io.in(1)) {
+    result := (Cat(0xa.U(8.W), data1) * Cat(0xa.U(8.W), data2))
+  }.otherwise {
     result := data1 + data2
   }
- 
+
   display.io.in := result
   display.io.dot := io.in(1)
   io.out := display.io.out
