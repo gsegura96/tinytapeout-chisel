@@ -11,11 +11,22 @@ class ChiselWrapper extends RawModule {
   val clk = io.in(0)
 
   val display = Module(new DisplayDriver)
-  display.io.in := io.in(5,2)
+  val data1 = Wire(UInt(3.W))
+  val data2 = Wire(UInt(3.W))
+  val result = Wire(UInt(4.W))
+
+  data1 := io.in(4,2)
+  data2 := io.in(7,5)
+
+  when(io.in(1)){
+    result := (data1 >> data2)
+  }.otherwise{
+    result := data1 + data2
+  }
+ 
+  display.io.in := result
   display.io.dot := io.in(1)
   io.out := display.io.out
-
-
   // val rst = io.in(1)
 
   // val gcd = withClockAndReset(clk.asClock, rst)(Module(new GCD))
